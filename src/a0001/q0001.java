@@ -96,7 +96,10 @@ You can return the answer in any order.*/
 
     public static ListNode intToListNode(int num){
 
+        while (num > 10){
 
+            new
+        }
 
 
         return null;
