@@ -39,7 +39,10 @@ You can return the answer in any order.*/
         //TODO 04
 /*Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
 The overall run time complexity should be O(log (m+n))*/
+        int[] nums1 = {1,3};
+        int[] nums2 = {2,4};
 
+        System.out.println(findMedianSortedArrays(nums1, nums2));
 
         //TODO 05
 
@@ -57,6 +60,48 @@ The overall run time complexity should be O(log (m+n))*/
 
 
 
+    }
+
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+
+        int p1 = 0;
+        int p2 = 0;
+
+        int lenlen = len1 + len2;
+
+        int len3 = lenlen / 2 + 1;
+        int[] nums3 = new int[len3];
+        int p3 = 0;
+
+        for (p3 =0 ; p3<len3 ; p3++){
+
+            if(p1 > len1){
+                nums3[p3] = nums2[p2];
+                p2++;
+            }else if(p2 > len2){
+                nums3[p3] = nums1[p1];
+                p1++;
+            }else if(nums1[p1]<nums2[p2]){
+                nums3[p3] = nums1[p1];
+                p1++;
+                System.out.println(nums3[p3]);
+            }else {
+                nums3[p3] = nums2[p2];
+                p2++;
+                System.out.println(nums3[p3]);
+            }
+        }
+
+        double ans;
+        if (lenlen % 2 == 0){
+            ans = (double)(nums3[len3-1]+nums3[len3-2]) / 2;
+        }else {
+            ans = nums3[len3-1];
+        }
+        return ans;
     }
 
     public static int lengthOfLongestSubstring(String s) {
