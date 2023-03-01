@@ -14,16 +14,16 @@ public class q0001 {
 
         //TODO 01
         /*Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
-You may assume that each input would have exactly one solution, and you may not use the same element twice.
-You can return the answer in any order.*/
+        You may assume that each input would have exactly one solution, and you may not use the same element twice.
+        You can return the answer in any order.*/
         //int[] nums = {3,3};
         //int target = 6;
         //int[] ints = twoSum(nums, target);
         //System.out.println(ints[0] + "," + ints[1]);
 
         //TODO 02
-/*        You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
-
+        /*
+        You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
         You may assume the two numbers do not contain any leading zero, except the number 0 itself.*/
         //ListNode node1 = new ListNode(4);
         //ListNode node2 = new ListNode(6 , node1);
@@ -37,21 +37,32 @@ You can return the answer in any order.*/
         //System.out.println(lengthOfLongestSubstring(s));
 
         //TODO 04
-/*Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
-The overall run time complexity should be O(log (m+n))*/
-        int[] nums1 = {1,3};
-        int[] nums2 = {2,4};
-
-        System.out.println(findMedianSortedArrays(nums1, nums2));
+        /*Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+        The overall run time complexity should be O(log (m+n))*/
+        //int[] nums1 = {1,3};
+        //int[] nums2 = {2,4};
+        //System.out.println(findMedianSortedArrays(nums1, nums2));
 
         //TODO 05
-
+        /*
+        Given a string s, return the longest palindromic substring in s.
+        */
+        //String s = "babaa";
+        //System.out.println(longestPalindrome(s));
 
         //TODO 06
-
+        /*The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+        */
+        //String s = "PAYPALISHIRING";
+        //char[][] charMap = stringToCharMap(s, 4);
+        //String s1 = charMapToString(charMap, 4);
+        //System.out.println(s1);
 
         //TODO 07
+        /*Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
+        * Assume the environment does not allow you to store 64-bit integers (signed or unsigned).*/
 
+        System.out.println(reverse(123));
 
         //TODO 08
 
@@ -59,6 +70,145 @@ The overall run time complexity should be O(log (m+n))*/
         //TODO 09
 
 
+
+    }
+
+    public static int reverse(int x) {
+
+        int sum = 0 ;
+
+        List<Integer> list = new LinkedList<>();
+
+        if(x>=0){
+            list.add(1);
+        }else {
+            list.add(-1);
+        }
+        while (x>9){
+            list.add(x%10);
+            x/=10;
+        }
+        list.add(x);
+
+        int len = list.size();
+
+        //if (len>11){
+        //    return 0;
+        //}
+
+        try {
+            for (int i = 1; i < len; i++) {
+                sum = sum * 10 + list.get(i);
+            }
+            if (list.get(0) == -1){
+                sum = -sum;
+            }
+            return sum;
+        }catch (Exception e){
+
+        }finally {
+            return 0;
+        }
+    }
+
+
+    public static String convert(String s, int numRows) {
+
+        char[] chars = s.toCharArray();
+
+        int len = chars.length;
+
+        char[][] charMap = new char[numRows][len];
+
+
+
+        return null;
+    }
+
+    public static char[][] stringToCharMap(String s, int numRows){
+
+        char[] chars = s.toCharArray();
+
+        int len = chars.length;
+
+        char[][] charMap = new char[numRows][len];
+
+        int rowPoint = 0;
+        int volPoint = 0;
+        int numRowsD1 = numRows - 1;
+        int numRowsMod = numRows * 2 - 2;
+
+        for (int i = 0; i < len; i++) {
+            int temp = i % numRowsMod;
+            if(temp < numRows){
+                charMap[rowPoint][volPoint] = chars[i];
+                rowPoint++;
+                if (rowPoint == numRows) {
+                    rowPoint = 0;
+                    volPoint++;
+                }
+            }else {
+                rowPoint = numRowsMod - temp;
+                charMap[rowPoint][volPoint] = chars[i];
+                rowPoint = 0;
+                volPoint++;
+            }
+
+        }
+
+        return charMap;
+    }
+
+    public static String charMapToString(char[][] charMap , int numRows){
+
+        int rowLen = charMap.length;
+        int volLen = charMap[0].length;
+
+        int point = 0 ;
+
+        char[] charsTemp = new char[volLen];
+
+        for (int i = 0; i < rowLen; i++) {
+            for (int j = 0; j < volLen; j++) {
+                char c = charMap[i][j];
+                if (c != '\0'){
+                    charsTemp[point] = c;
+                    point++;
+                }
+            }
+        }
+
+        //System.out.println(charsTemp);
+
+        String s = String.valueOf(charsTemp);
+        return s;
+    }
+
+
+    public static String longestPalindrome(String s) {
+
+        if (s == null || s.length() < 1) {
+            return "";
+        }
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+    public static int expandAroundCenter(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            --left;
+            ++right;
+        }
+        return right - left - 1;
 
     }
 
