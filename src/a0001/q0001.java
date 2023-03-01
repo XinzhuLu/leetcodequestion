@@ -62,7 +62,7 @@ public class q0001 {
         /*Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
         * Assume the environment does not allow you to store 64-bit integers (signed or unsigned).*/
 
-        System.out.println(reverse(123));
+        System.out.println(reverse(1534236469));
 
         //TODO 08
 
@@ -73,42 +73,43 @@ public class q0001 {
 
     }
 
+    public int myAtoi(String str) {
+        str = str.trim();
+        if (str.length() == 0) return 0;
+        if (!Character.isDigit(str.charAt(0))
+                && str.charAt(0) != '-' && str.charAt(0) != '+')
+            return 0;
+        int ans = 0;
+        boolean neg = str.charAt(0) == '-';
+        int i = !Character.isDigit(str.charAt(0)) ? 1 : 0;
+        while (i < str.length() && Character.isDigit(str.charAt(i))) {
+            int tmp = ((neg ? Integer.MIN_VALUE : Integer.MIN_VALUE + 1) + (str.charAt(i) - '0')) / 10;
+            if (tmp > ans) {
+                return neg ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+            }
+            ans = ans * 10 - (str.charAt(i++) - '0');
+        }
+        return neg ? ans : -ans;
+    }
+
     public static int reverse(int x) {
 
-        int sum = 0 ;
-
-        List<Integer> list = new LinkedList<>();
-
-        if(x>=0){
-            list.add(1);
-        }else {
-            list.add(-1);
-        }
-        while (x>9){
-            list.add(x%10);
-            x/=10;
-        }
-        list.add(x);
-
-        int len = list.size();
-
-        //if (len>11){
-        //    return 0;
-        //}
-
-        try {
-            for (int i = 1; i < len; i++) {
-                sum = sum * 10 + list.get(i);
+        int res = 0;
+        while(x!=0) {
+            //每次取末尾数字
+            int tmp = x%10;
+            //判断是否 大于 最大32位整数
+            if (res>214748364 || (res==214748364 && tmp>7)) {
+                return 0;
             }
-            if (list.get(0) == -1){
-                sum = -sum;
+            //判断是否 小于 最小32位整数
+            if (res<-214748364 || (res==-214748364 && tmp<-8)) {
+                return 0;
             }
-            return sum;
-        }catch (Exception e){
-
-        }finally {
-            return 0;
+            res = res*10 + tmp;
+            x /= 10;
         }
+        return res;
     }
 
 
