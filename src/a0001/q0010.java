@@ -1,5 +1,7 @@
 package a0001;
 
+import java.util.*;
+
 /**
  * @description: ???
  * Created by 馨竹 on 2023/03/02
@@ -28,20 +30,22 @@ public class q0010 {
 
         //TODO 13
         /*Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.*/
-        System.out.println(romanToInt("MCMXCIV"));
-        System.out.println(romanToInt("MXCIV"));
+        //System.out.println(romanToInt("MCMXCIV"));
+        //System.out.println(romanToInt("MXCIV"));
 
 
         //TODO 14
-
-
-
+        /*Write a function to find the longest common prefix string amongst an array of strings.If there is no common prefix, return an empty string "".*/
+        //String[] strs = {"flower", "flow", "flight"};
+        //String[] strs = {"ab", "a", "a"};
+        //String[] strs = {"fl", "fl", "fl"};
+        //System.out.println(longestCommonPrefix(strs));
 
 
         //TODO 15
-
-
-
+        /*Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.Notice that the solution set must not contain duplicate triplets.*/
+        int[] nums = { 0,0,0,0,0,0};
+        System.out.println(threeSum(nums).toString());
 
 
         //TODO 16
@@ -68,6 +72,82 @@ public class q0010 {
 
 
 
+    }
+
+    public static List<List<Integer>> threeSum(int[] nums) {
+
+        List<List<Integer>> ans = new ArrayList<>();
+        Map<String , List<Integer>> distinctMap = new HashMap<>();
+
+        int[] newNums = Arrays.stream(nums).sorted().toArray();
+
+        int len = newNums.length;
+
+        int numAPoint, numBPoint, numCPoint;
+        int sum;
+        boolean flag = true;
+
+        for (numAPoint = 0; numAPoint < len-2; numAPoint++) {
+
+            for (numBPoint = numAPoint+1; numBPoint < len-1 ; numBPoint++) {
+
+                for (numCPoint = numBPoint + 1; numCPoint < len; numCPoint++) {
+
+                    sum = newNums[numAPoint]+newNums[numBPoint]+newNums[numCPoint];
+
+                    if (sum == 0){
+                        List<Integer> subAns = new ArrayList<>(3);
+                        subAns.add(newNums[numAPoint]);
+                        subAns.add(newNums[numBPoint]);
+                        subAns.add(newNums[numCPoint]);
+                        String key = String.valueOf(newNums[numAPoint])+String.valueOf(newNums[numBPoint])+String.valueOf(newNums[numCPoint]);
+                        distinctMap.put(key , subAns );
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        for (Map.Entry<String , List<Integer>> entry : distinctMap.entrySet()){
+            ans.add(entry.getValue());
+        }
+        return ans;
+    }
+
+    public static String longestCommonPrefix(String[] strs) {
+
+        int rowLen = strs.length;
+        char[][] charsMap = new char[rowLen][200];
+
+
+        int rowPoint ;
+        int volLimit = strs[0].length();
+
+        String ans = "";
+
+        for (int i = 0; i < rowLen; i++) {
+            charsMap[i] = strs[i].toCharArray();
+        }
+
+        for (int volPoint = 0; volPoint < volLimit; volPoint++) {
+
+
+            try {
+                for (rowPoint = 1; rowPoint < rowLen; rowPoint++) {
+                    if (charsMap[0][volPoint] != charsMap[rowPoint][volPoint]){
+                        return ans;
+                    }
+                }
+            }catch (Exception e){
+                return ans;
+            }
+
+            ans += charsMap[0][volPoint];
+
+        }
+
+        return ans;
     }
 
     public static int romanToInt(String s) {
