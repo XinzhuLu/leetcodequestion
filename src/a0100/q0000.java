@@ -1,4 +1,4 @@
-package a0001;
+package a0100;
 
 import java.util.*;
 
@@ -8,7 +8,7 @@ import java.util.*;
  * --------------------------------------------
  * Update for ??? on ???? / ?? / ?? by ???
  **/
-public class q0001 {
+public class q0000 {
 
     public static void main(String[] args) {
 
