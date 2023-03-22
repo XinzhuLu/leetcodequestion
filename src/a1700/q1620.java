@@ -1,5 +1,9 @@
 package a1700;
 
+import common.Solution;
+
+import java.util.Arrays;
+
 /**
  * @description: ???
  * Created by 馨竹 on 2023/03/19
@@ -38,7 +42,13 @@ A string a is lexicographically smaller than a string b (of the same length) if 
         System.out.println(findLexSmallestString("5525", 9, 2));
 
         //TODO 1626
+/*
+* You are the manager of a basketball team. For the upcoming tournament, you want to choose the team with the highest overall score. The score of the team is the sum of scores of all the players in the team.However, the basketball team is not allowed to have conflicts. A conflict exists if a younger player has a strictly higher score than an older player. A conflict does not occur between players of the same age.Given two lists, scores and ages, where each scores[i] and ages[i] represents the score and age of the ith player, respectively, return the highest overall score of all possible basketball teams.
+*/
+        int[] scores = {4 , 5 , 6 , 5};
+        int[] ages = {2 , 1 , 2 , 1};
 
+        System.out.println(bestTeamScore(scores, ages));
 
         //TODO 1627
 
@@ -50,6 +60,28 @@ A string a is lexicographically smaller than a string b (of the same length) if 
 
 
     }
+
+    public static int bestTeamScore(int[] scores, int[] ages) {
+        int n = scores.length;
+        int[][] people = new int[n][2];
+        for (int i = 0; i < n; ++i) {
+            people[i] = new int[]{scores[i], ages[i]};
+        }
+        Arrays.sort(people, (a, b) -> a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]);
+        int[] dp = new int[n];
+        int res = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i - 1; j >= 0; --j) {
+                if (people[j][1] <= people[i][1]) {
+                    dp[i] = Math.max(dp[i], dp[j]);
+                }
+            }
+            dp[i] += people[i][0];
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+
 
     public static String findLexSmallestString(String s, int a, int b) {
         int n = s.length();
