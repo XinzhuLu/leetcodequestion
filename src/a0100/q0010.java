@@ -65,7 +65,6 @@ public class q0010 {
         nums[a] + nums[b] + nums[c] + nums[d] == target
         You may return the answer in any order.*/
 
-        //TODO 19
 
 
     }
